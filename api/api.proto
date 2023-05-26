@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/jvdm/go-grpc-lb-poc/api";
+
+package api;
+
+service PocService {
+  rpc SendRequest (PocRequest) returns (PocResponse) {}
+}
+
+message PocRequest {
+  string client_id = 1;
+  int64 timestamp = 2;
+}
+
+message PocResponse {
+  string server_id = 1;
+  int64 processing_time = 2;
+  int64 server_start_time = 3;
+}
