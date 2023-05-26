@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: grpc-server
+  template:
+    metadata:
+      labels:
+        app: grpc-server
+    spec:
+      containers:
+      - name: server
+        image: quay.io/jvdm/stackrox-dev:go-grpc-lb-poc-server
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        - containerPort: 8080

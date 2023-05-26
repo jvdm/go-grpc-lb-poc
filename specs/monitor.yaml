@@ -1,0 +1,74 @@
+---
+# Server monitor.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: grpc-server
+  name: grpc-server
+  namespace: poc
+spec:
+  endpoints:
+  - port: metrics
+    interval: 5s
+    scheme: http
+  selector:
+    matchLabels:
+      app: grpc-server
+  namespaceSelector:
+    matchNames:
+    - poc
+
+---
+# Client monitor.
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    k8s-app: grpc-client
+  name: grpc-client
+  namespace: poc
+spec:
+  podMetricsEndpoints:
+  - port: metrics
+    interval: 5s
+    scheme: http
+  selector:
+    matchLabels:
+      app: grpc-client
+  namespaceSelector:
+    matchNames:
+    - poc
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: poc-prometheus-k8s
+  namespace: poc
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - endpoints
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: poc-prometheus-k8s
+  namespace: poc
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: poc-prometheus-k8s
+subjects:
+- kind: ServiceAccount
+  name: prometheus-k8s
+  namespace: openshift-monitoring
