@@ -13,6 +13,8 @@ spec:
     env:
     - name: SERVER_HOSTNAME
       value: "grpc-server"
+    - name: GRPC_GO_LOG_SEVERITY_LEVEL
+      value: "info"
     ports:
     - name: metrics
       containerPort: 8081

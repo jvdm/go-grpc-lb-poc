@@ -1,8 +1,8 @@
-## gRPC load balacing POC
+## gRPC load balancing POC
 
 The purpose of this Proof of Concept (POC) is to evaluate how a gRPC client, with "round-robin" load balancing configuration, handles scaling operations in a Kubernetes environment. I want to understand how the client reacts to changes in the number of server pods (i.e., when they are scaled up and down), and how effective the client-side load balancing is.
 
-This evaluation is particularly to decide if your distributed gRPC service will dynamically adjust to load and what are the availability implications. In particular how gRPC, with its built-in load balancing policies and service discovery via DNS, provides flexibility and efficiency in this regard.
+This evaluation will help you decide if your distributed gRPC service will dynamically adjust to load and what are the availability implications. In particular how gRPC, with its built-in load balancing policies and service discovery via DNS, provides flexibility and efficiency in this regard.
 
 The metrics defined to evaluate the server and client interactions:
 
